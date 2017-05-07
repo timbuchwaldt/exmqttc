@@ -1,19 +1,17 @@
 # Exmqttc
 
-**TODO: Add description**
+Elixir wrapper for the emqttc library.
 
+emqttc must currently be installed manually as it is not available on hex (yet).
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `exmqttc` to your list of dependencies in `mix.exs`:
+The package can be installedby adding `exmqttc` and `emqttc` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:exmqttc, "~> 0.1.0"}]
+  [{:exmqttc, "~> 0.1.0"}, {:emqttc, github: "emqtt/emqttc"}]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+The docs can
 be found at [https://hexdocs.pm/exmqttc](https://hexdocs.pm/exmqttc).
-

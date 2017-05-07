@@ -4,6 +4,21 @@ defmodule Exmqttc do
   `Exmqttc` provides a connection to a MQTT server based on [emqttc](https://github.com/emqtt/emqttc)
   """
 
+  @typedoc """
+  A PID like type
+  """
+  @type pidlike :: pid | port | atom | {atom, node}
+
+  @typedoc """
+  A QoS level
+  """
+  @type qos :: :qos1 | :qos2 | :qos3
+
+  @typedoc """
+  A single topic, a list of topics or a list of tuples of topic and QoS level
+  """
+  @type topics :: binary | [binary] | [{binary, qos}]
+
   # API
 
   @doc """
@@ -18,6 +33,7 @@ defmodule Exmqttc do
   @doc """
   Subscribe to a topic or a list of topics with a given QoS.
   """
+  @spec subscribe(pidlike, list, qos) :: :ok
   def subscribe(pid, topics, qos\\:qos0) do
     GenServer.call(pid, {:subscribe_topics, topics, qos})
   end
@@ -25,6 +41,7 @@ defmodule Exmqttc do
   @doc """
   Subscribe to the given topics while blocking until the subscribtion has been confirmed by the server.
   """
+  @spec sync_subscribe(pid, topics) :: :ok
   def sync_subscribe(pid, topics) do
     GenServer.call(pid, {:sync_subscribe_topics, topics})
   end
@@ -32,6 +49,7 @@ defmodule Exmqttc do
   @doc """
   Publish a message to MQTT
   """
+  @spec publish(pid, binary, binary, list) :: :ok
   def publish(pid, topic, payload, opts\\[]) do
     GenServer.call(pid, {:publish_message, topic, payload, opts})
   end
@@ -39,6 +57,7 @@ defmodule Exmqttc do
   @doc """
   Publish a message to MQTT synchronously
   """
+  @spec sync_publish(pid, binary, binary, list) :: :ok
   def sync_publish(pid, topic, payload, opts\\[]) do
     GenServer.call(pid, {:sync_publish_message, topic, payload, opts})
   end
