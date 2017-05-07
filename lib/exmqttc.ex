@@ -6,7 +6,7 @@ defmodule Exmqttc do
 
   # API
 
-  def start_link(callback_module, opts\\[], mqtt_opts\\[logger: :error]) do
+  def start_link(callback_module, opts\\[], mqtt_opts\\[]) do
     # default client_id to new uuidv4
     GenServer.start_link(__MODULE__, [callback_module, mqtt_opts], opts)
   end
@@ -82,7 +82,8 @@ defmodule Exmqttc do
   # helpers
 
   defp map_options(input) do
-    Enum.map(input, fn({key, value})->
+    merged_defaults = Keyword.merge([logger: :error], input)
+    Enum.map(merged_defaults, fn({key, value})->
       if value == true do
         key
       else
