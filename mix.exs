@@ -22,10 +22,11 @@ defmodule Exmqttc.Mixfile do
   def package do
     %{
       name: :exmqttc,
-      files: ["lib", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Tim Buchwaldt"],
-      description: "Elixir wrapper for the [emqttc](https://github.com/emqtt/emqttc) library.",
+      description: "Elixir wrapper for the emqttc library.",
       licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/timbuchwaldt/exmqttc"},
     }
   end
 
@@ -40,8 +41,9 @@ defmodule Exmqttc.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:emqttc, github: "emqtt/emqttc"},
-      {:uuid, "~> 1.1"}
+      #{:emqttc, github: "emqtt/emqttc"},
+      {:uuid, "~> 1.1"},
+      {:ex_doc, ">= 0.0.0", only: :dev},
     ]
   end
 end
