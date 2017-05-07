@@ -7,7 +7,8 @@ defmodule Exmqttc.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     package: package()]
   end
 
   # Configuration for the OTP application
@@ -16,6 +17,16 @@ defmodule Exmqttc.Mixfile do
   def application do
     # Specify extra applications you'll use from Erlang/Elixir
     [extra_applications: [:logger]]
+  end
+
+  def package do
+    %{
+      name: :exmqttc,
+      files: ["lib", "mix.exs", "README*", "readme*", "LICENSE*", "license*"],
+      maintainers: ["Tim Buchwaldt"],
+      description: "Elixir wrapper for the [emqttc](https://github.com/emqtt/emqttc) library.",
+      licenses: ["MIT"],
+    }
   end
 
   # Dependencies can be Hex packages:
