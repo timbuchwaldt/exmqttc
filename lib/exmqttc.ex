@@ -1,34 +1,50 @@
 defmodule Exmqttc do
   use GenServer
   @moduledoc """
-  Documentation for Exmqttc.
+  `Exmqttc` provides a connection to a MQTT server based on [emqttc](https://github.com/emqtt/emqttc)
   """
 
   # API
 
+  @doc """
+  Start the Exmqttc client. `opts` are passed directly to GenServer.
+  `mqtt_opts` are reformatted so all options can be passed in as a Keyworld list.
+  """
   def start_link(callback_module, opts\\[], mqtt_opts\\[]) do
     # default client_id to new uuidv4
     GenServer.start_link(__MODULE__, [callback_module, mqtt_opts], opts)
   end
 
+  @doc """
+  Subscribe to a topic or a list of topics with a given QoS.
+  """
   def subscribe(pid, topics, qos\\:qos0) do
     GenServer.call(pid, {:subscribe_topics, topics, qos})
   end
 
+  @doc """
+  Subscribe to the given topics while blocking until the subscribtion has been confirmed by the server.
+  """
   def sync_subscribe(pid, topics) do
     GenServer.call(pid, {:sync_subscribe_topics, topics})
   end
 
+  @doc """
+  Publish a message to MQTT
+  """
   def publish(pid, topic, payload, opts\\[]) do
     GenServer.call(pid, {:publish_message, topic, payload, opts})
   end
 
+  @doc """
+  Publish a message to MQTT synchronously
+  """
   def sync_publish(pid, topic, payload, opts\\[]) do
     GenServer.call(pid, {:sync_publish_message, topic, payload, opts})
   end
 
-  # GenServer callbacks
 
+  # GenServer callbacks
   def init([callback_module, opts]) do
     # start callback handler
     {:ok, callback_pid} = Exmqttc.Callback.start_link(callback_module)
@@ -39,8 +55,6 @@ defmodule Exmqttc do
     |> :emqttc.start_link
     {:ok, {mqtt_pid, callback_pid}}
   end
-
-
 
   def handle_call({:sync_subscribe_topics, topics}, _from, {mqtt_pid, callback_pid}) do
     res = :emqttc.sync_subscribe(mqtt_pid, topics)

@@ -1,8 +1,5 @@
 defmodule Exmqttc.Callback do
-  @moduledoc """
-  This module handles callbacks to an implementors module.
-  It decouples the connection gen_server from the callback-invoking one.
-  """
+  @moduledoc false
   use GenServer
 
   def start_link(module) do

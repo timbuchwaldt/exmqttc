@@ -1,4 +1,6 @@
 defmodule Exmqtt.Testclient do
+  @moduledoc false
+  
   def connected do
     send(:testclient, :connected)
   end
