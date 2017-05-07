@@ -1,0 +1,6 @@
+%{"emqttc": {:git, "https://github.com/emqtt/emqttc.git", "d4cbc38808fec0bda30be245268e876283c0e49f", []},
+  "gen_logger": {:git, "https://github.com/emqtt/gen_logger.git", "f6e9f2f373d99f41ffe0579ab5a5f3b19472c9c5", [branch: "master"]},
+  "goldrush": {:git, "https://github.com/basho/goldrush.git", "8f1b715d36b650ec1e1f5612c00e28af6ab0de82", [tag: "0.1.9"]},
+  "lager": {:git, "https://github.com/basho/lager.git", "81eaef0ce98fdbf64ab95665e3bc2ec4b24c7dac", [branch: "master"]},
+  "qmttc": {:git, "https://github.com/emqtt/emqttc.git", "d4cbc38808fec0bda30be245268e876283c0e49f", []},
+  "uuid": {:hex, :uuid, "1.1.7", "007afd58273bc0bc7f849c3bdc763e2f8124e83b957e515368c498b641f7ab69", [:mix], []}}
