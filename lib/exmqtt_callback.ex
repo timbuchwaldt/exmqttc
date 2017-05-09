@@ -3,7 +3,7 @@ defmodule Exmqttc.Callback do
   use GenServer
 
   def start_link(module) do
-    GenServer.start_link(__MODULE__, module)
+    GenServer.start_link(__MODULE__, module, name: :"#{module}.Callback")
   end
 
   def init(callback_module) do
