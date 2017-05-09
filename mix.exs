@@ -24,7 +24,7 @@ defmodule Exmqttc.Mixfile do
       name: :exmqttc,
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Tim Buchwaldt"],
-      description: "Elixir wrapper for the emqttc library.",
+      description: "Elixir wrapper for the emqttc library. Some of the features: Reconnection, offline queueing, gen_* like callback APIs, QoS 0-2.",
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/timbuchwaldt/exmqttc"},
     }
