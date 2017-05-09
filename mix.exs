@@ -41,7 +41,7 @@ defmodule Exmqttc.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      #{:emqttc, github: "emqtt/emqttc"},
+      # {:emqttc, github: "emqtt/emqttc"},
       {:uuid, "~> 1.1"},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
