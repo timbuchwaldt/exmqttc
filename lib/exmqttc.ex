@@ -12,7 +12,7 @@ defmodule Exmqttc do
   @typedoc """
   A QoS level
   """
-  @type qos :: :qos1 | :qos2 | :qos3
+  @type qos :: :qos0 | :qos1 | :qos2
 
   @typedoc """
   A single topic, a list of topics or a list of tuples of topic and QoS level

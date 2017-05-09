@@ -44,6 +44,7 @@ defmodule Exmqttc.Mixfile do
       #{:emqttc, github: "emqtt/emqttc"},
       {:uuid, "~> 1.1"},
       {:ex_doc, ">= 0.0.0", only: :dev},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 end
