@@ -12,7 +12,7 @@ otp_release:
   - 19.3
 script:
   - sudo cp support/mosquitto.conf /etc/mosquitto
-  - sudo service mosquitto restart
+  - sudo service mosquitto restart && sleep 5
   - cat /etc/mosquitto/mosquitto.conf
   - netstat -tulpen
   - cat /var/log/mosquitto.log
