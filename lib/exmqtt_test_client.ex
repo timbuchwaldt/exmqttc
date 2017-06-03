@@ -5,17 +5,17 @@ defmodule Exmqtt.Testclient do
     {:ok, []}
   end
 
-  def connected(state) do
+  def handle_connect(state) do
     send(:testclient, :connected)
     {:ok, state}
   end
 
-  def disconnected(state) do
+  def handle_disconnect(state) do
     send(:testclient, :disconnected)
     {:ok, state}
   end
 
-  def publish(topic, payload, state) do
+  def handle_publish(topic, payload, state) do
     send(:testclient, {:publish, topic, payload})
     {:ok, state}
   end

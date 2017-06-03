@@ -7,7 +7,7 @@ defmodule Exmqttc do
   @typedoc """
   A PID like type
   """
-  @type pidlike :: pid | port | atom | {atom, node}
+  @type pidlike :: pid() | port() | atom() | {atom(), node()}
 
   @typedoc """
   A QoS level
@@ -17,7 +17,7 @@ defmodule Exmqttc do
   @typedoc """
   A single topic, a list of topics or a list of tuples of topic and QoS level
   """
-  @type topics :: binary | [binary] | [{binary, qos}]
+  @type topics :: String.t() | [String.t()] | [{String.t(), qos}]
 
   # API
 
@@ -25,7 +25,7 @@ defmodule Exmqttc do
   Start the Exmqttc client. `opts` are passed directly to GenServer.
   `mqtt_opts` are reformatted so all options can be passed in as a Keyworld list.
   """
-  def start_link(callback_module, opts\\[], mqtt_opts\\[]) do
+  def start_link(callback_module, opts \\ [], mqtt_opts \\ []) do
     # default client_id to new uuidv4
     GenServer.start_link(__MODULE__, [callback_module, mqtt_opts], opts)
   end
@@ -33,8 +33,8 @@ defmodule Exmqttc do
   @doc """
   Subscribe to a topic or a list of topics with a given QoS.
   """
-  @spec subscribe(pidlike, list, qos) :: :ok
-  def subscribe(pid, topics, qos\\:qos0) do
+  @spec subscribe(pidlike, topics, qos) :: :ok
+  def subscribe(pid, topics, qos \\ :qos0) do
     GenServer.call(pid, {:subscribe_topics, topics, qos})
   end
 
@@ -50,7 +50,7 @@ defmodule Exmqttc do
   Publish a message to MQTT
   """
   @spec publish(pid, binary, binary, list) :: :ok
-  def publish(pid, topic, payload, opts\\[]) do
+  def publish(pid, topic, payload, opts \\ []) do
     GenServer.call(pid, {:publish_message, topic, payload, opts})
   end
 
@@ -58,7 +58,7 @@ defmodule Exmqttc do
   Publish a message to MQTT synchronously
   """
   @spec sync_publish(pid, binary, binary, list) :: :ok
-  def sync_publish(pid, topic, payload, opts\\[]) do
+  def sync_publish(pid, topic, payload, opts \\ []) do
     GenServer.call(pid, {:sync_publish_message, topic, payload, opts})
   end
 
@@ -98,12 +98,12 @@ defmodule Exmqttc do
   # emqttc messages
 
   def handle_info({:mqttc, _pid, :connected}, {mqtt_pid, callback_pid}) do
-    GenServer.cast(callback_pid, :connected)
+    GenServer.cast(callback_pid, :connect)
     {:noreply, {mqtt_pid, callback_pid}}
   end
 
   def handle_info({:mqttc, _pid, :disconnected}, {mqtt_pid, callback_pid}) do
-    GenServer.cast(callback_pid, :disconnected)
+    GenServer.cast(callback_pid, :disconnect)
     {:noreply, {mqtt_pid, callback_pid}}
   end
 
@@ -116,7 +116,7 @@ defmodule Exmqttc do
 
   defp map_options(input) do
     merged_defaults = Keyword.merge([logger: :error], input)
-    Enum.map(merged_defaults, fn({key, value})->
+    Enum.map(merged_defaults, fn({key, value}) ->
       if value == true do
         key
       else
