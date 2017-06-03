@@ -26,7 +26,7 @@ defmodule Exmqttc.Callback do
 
   @doc false
   def start_link(module) do
-    GenServer.start_link(__MODULE__, module, name: :"#{module}.Callback")
+    GenServer.start_link(__MODULE__, module)
   end
 
   @doc false
