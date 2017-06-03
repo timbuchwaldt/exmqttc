@@ -45,7 +45,8 @@ defmodule Exmqttc.Mixfile do
       {:uuid, "~> 1.1"},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
-      {:credo, "~> 0.8.0"}
+      {:credo, "~> 0.8.0"},
+      {:inch_ex, only: :docs}
     ]
   end
 end

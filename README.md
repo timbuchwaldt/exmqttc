@@ -1,4 +1,5 @@
 # Exmqttc
+[![Deps Status](https://beta.hexfaktor.org/badge/all/github/timbuchwaldt/exmqttc.svg)](https://beta.hexfaktor.org/github/timbuchwaldt/exmqttc)
 
 Elixir wrapper for the emqttc library.
 
