@@ -128,7 +128,7 @@ defmodule Exmqttc do
   # helpers
 
   defp map_options(input) do
-    merged_defaults = Keyword.merge([logger: :error], input)
+    merged_defaults = Keyword.merge([logger: :debug], input)
     Enum.map(merged_defaults, fn({key, value}) ->
       if value == true do
         key
