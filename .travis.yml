@@ -14,7 +14,9 @@ otp_release:
 script:
   - cat /etc/mosquitto/mosquitto.conf
   - netstat -tulpen
+  - cat /var/log/mosquitto/mosquitto.log
   - mix test
+  - cat /var/log/mosquitto/mosquitto.log
 after_script:
   - MIX_ENV=test mix inch.report
 matrix:
