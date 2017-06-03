@@ -1,4 +1,4 @@
-sudo: true
+sudo: false
 dist: trusty
 language: elixir
 addons:
@@ -12,6 +12,7 @@ otp_release:
   - 18.3
   - 19.3
 script:
+  - cat /etc/mosquitto/mosquitto.conf
   - netstat -tulpen
   - mix test
 after_script:
