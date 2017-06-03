@@ -32,7 +32,7 @@ defmodule Exmqttc do
   end
 
   @doc """
-  Subscribe to a topic or a list of topics with a given QoS.
+  Subscribe to the given topic(s) given as `topics` with a given `qos`.
   """
   @spec subscribe(pidlike, topics, qos) :: :ok
   def subscribe(pid, topics, qos \\ :qos0) do
