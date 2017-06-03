@@ -17,3 +17,6 @@ script:
   - mix test
 after_script:
   - MIX_ENV=test mix inch.report
+cache:
+  directories:
+    - deps

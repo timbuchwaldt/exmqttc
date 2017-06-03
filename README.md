@@ -1,4 +1,4 @@
-# Exmqttc [![Deps Status](https://beta.hexfaktor.org/badge/all/github/timbuchwaldt/exmqttc.svg)](https://beta.hexfaktor.org/github/timbuchwaldt/exmqttc) [![Build Status](https://travis-ci.org/timbuchwaldt/exmqttc.svg?branch=master)](https://travis-ci.org/timbuchwaldt/exmqttc)
+# Exmqttc [![Deps Status](https://beta.hexfaktor.org/badge/all/github/timbuchwaldt/exmqttc.svg)](https://beta.hexfaktor.org/github/timbuchwaldt/exmqttc) [![Build Status](https://travis-ci.org/timbuchwaldt/exmqttc.svg?branch=master)](https://travis-ci.org/timbuchwaldt/exmqttc) [![Inline docs](http://inch-ci.org/github/timbuchwaldt/exmqttc.svg?branch=master)](http://inch-ci.org/github/timbuchwaldt/exmqttc)
 
 Elixir wrapper for the emqttc library.
 
