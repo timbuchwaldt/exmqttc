@@ -1,4 +1,4 @@
-sudo: false
+sudo: sudo
 dist: trusty
 language: elixir
 addons:
