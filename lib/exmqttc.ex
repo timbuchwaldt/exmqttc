@@ -22,7 +22,8 @@ defmodule Exmqttc do
   # API
 
   @doc """
-  Start the Exmqttc client. `opts` are passed directly to GenServer.
+  Start the Exmqttc client. `callback_module` is used for callbacks and should implement the `Exmqttc.Callback` behaviour.
+   `opts` are passed directly to GenServer.
   `mqtt_opts` are reformatted so all options can be passed in as a Keyworld list.
   """
   def start_link(callback_module, opts \\ [], mqtt_opts \\ []) do
