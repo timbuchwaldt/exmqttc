@@ -20,3 +20,4 @@ after_script:
 cache:
   directories:
     - deps
+    - _build
