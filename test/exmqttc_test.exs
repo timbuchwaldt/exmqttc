@@ -1,5 +1,5 @@
 defmodule ExmqttcTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
   doctest Exmqttc
 
   setup do
