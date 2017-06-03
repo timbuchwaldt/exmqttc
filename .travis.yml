@@ -1,9 +1,11 @@
 sudo: false
+dist: trusty
 language: elixir
 addons:
   apt:
     packages:
       - mosquitto
+services: mosquitto
 elixir:
   - 1.4.4
 otp_release:
