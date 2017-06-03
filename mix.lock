@@ -2,7 +2,7 @@
   "credo": {:hex, :credo, "0.8.0", "187ce36098afef67baa503d0bb3ec047953c88e4c662591371d15ae9ce150119", [:mix], [{:bunt, "~> 0.2.0", [hex: :bunt, optional: false]}]},
   "dialyxir": {:hex, :dialyxir, "0.5.0", "5bc543f9c28ecd51b99cc1a685a3c2a1a93216990347f259406a910cf048d1d7", [:mix], []},
   "earmark": {:hex, :earmark, "1.2.1", "7ad3f203ab84d31832814483c834e006cf88949f061a4b50d7e783147572280f", [:mix], []},
-  "emqttc": {:git, "https://github.com/emqtt/emqttc.git", "d4cbc38808fec0bda30be245268e876283c0e49f", []},
+  "emqttc": {:git, "https://github.com/emqtt/emqttc.git", "d43c110f7f39a8faa3d38f781638639f01fc6cb0", []},
   "ex_doc": {:hex, :ex_doc, "0.15.1", "d5f9d588fd802152516fccfdb96d6073753f77314fcfee892b15b6724ca0d596", [:mix], [{:earmark, "~> 1.1", [hex: :earmark, optional: false]}]},
   "gen_logger": {:git, "https://github.com/emqtt/gen_logger.git", "f6e9f2f373d99f41ffe0579ab5a5f3b19472c9c5", [branch: "master"]},
   "goldrush": {:git, "https://github.com/basho/goldrush.git", "8f1b715d36b650ec1e1f5612c00e28af6ab0de82", [tag: "0.1.9"]},

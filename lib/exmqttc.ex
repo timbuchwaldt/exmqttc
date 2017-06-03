@@ -62,6 +62,14 @@ defmodule Exmqttc do
     GenServer.call(pid, {:sync_publish_message, topic, payload, opts})
   end
 
+  @doc """
+  Disconnect socket to MQTT server
+  """
+  @spec disconnect(pid) :: :ok
+  def disconnect(pid) do
+    GenServer.call(pid, :disconnect)
+  end
+
 
   # GenServer callbacks
   def init([callback_module, opts]) do
@@ -92,6 +100,11 @@ defmodule Exmqttc do
 
   def handle_call({:publish_message, topic, payload, opts}, _from, {mqtt_pid, callback_pid}) do
     :emqttc.publish(mqtt_pid, topic, payload, opts)
+    {:reply, :ok, {mqtt_pid, callback_pid}}
+  end
+
+  def handle_call(:disconnect, _from, {mqtt_pid, callback_pid}) do
+    :emqttc.disconnect(mqtt_pid)
     {:reply, :ok, {mqtt_pid, callback_pid}}
   end
 
