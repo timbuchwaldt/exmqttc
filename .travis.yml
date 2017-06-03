@@ -15,6 +15,7 @@ otp_release:
   - 19.3
 script:
   - mix test
+  - mix credo
   - mix inch.report
 cache:
   directories:
