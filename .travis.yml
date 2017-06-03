@@ -1,5 +1,9 @@
 sudo: false
 language: elixir
+addons:
+  apt:
+    packages:
+      - mosquitto
 elixir:
   - 1.4.4
 otp_release:
@@ -13,7 +17,3 @@ matrix:
   exclude:
   - elixir: 1.1.1
     otp_release: 19.3
-addons:
-  apt:
-    packages:
-      - mosquitto
