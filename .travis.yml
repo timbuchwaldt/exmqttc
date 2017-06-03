@@ -15,8 +15,7 @@ otp_release:
   - 19.3
 script:
   - mix test
-after_script:
-  - MIX_ENV=dev mix inch.report
+  - mix inch.report
 cache:
   directories:
     - deps
