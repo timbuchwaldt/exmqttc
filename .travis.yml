@@ -5,21 +5,18 @@ addons:
   apt:
     packages:
       - mosquitto
-services: mosquitto
 elixir:
   - 1.4.4
 otp_release:
   - 18.3
   - 19.3
 script:
+  - cp support/mosquitto.conf /etc/mosquitto
+  - service mosquitto restart
   - cat /etc/mosquitto/mosquitto.conf
   - netstat -tulpen
-  - cat /var/log/mosquitto/mosquitto.log
+  - cat /var/log/mosquitto.log
   - mix test
-  - cat /var/log/mosquitto/mosquitto.log
+  - cat /var/log/mosquitto.log
 after_script:
   - MIX_ENV=test mix inch.report
-matrix:
-  exclude:
-  - elixir: 1.1.1
-    otp_release: 19.3
