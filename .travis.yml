@@ -21,3 +21,6 @@ cache:
   directories:
     - deps
     - _build
+notifications:
+  email:
+    - tim@buchwaldt.ws
