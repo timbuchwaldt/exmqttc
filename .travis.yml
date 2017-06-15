@@ -4,34 +4,35 @@ language: elixir
 addons:
   apt:
     sources:
-      - sourceline: 'deb http://repo.mosquitto.org/debian wheezy main'
-        key_url: 'http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key'
+    - sourceline: deb http://repo.mosquitto.org/debian wheezy main
+      key_url: http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
     packages:
-      - mosquitto
+    - mosquitto
 elixir:
-  - 1.4.4
+- 1.4.4
 otp_release:
-  - 18.3
-  - 19.3
+- 18.3
+- 19.3
 script:
-  - mix test
-  - mix credo
-  - mix inch.report
+- mix test
+- mix credo
+- mix inch.report
 cache:
   directories:
-    - deps
-    - _build
+  - deps
+  - _build
 notifications:
   email:
-    - tim@buchwaldt.ws
+  - tim@buchwaldt.ws
 deploy:
   provider: script
-  script: >-
-    mix deps.get &&
-    mix hex.config username "$HEX_USERNAME" &&
-    (mix hex.config encrypted_key "$HEX_ENCRYPTED_KEY" > /dev/null 2>&1) &&
+  script: |-
+    mix deps.get && mix hex.config username "$HEX_USERNAME" && (mix hex.config encrypted_key "$HEX_ENCRYPTED_KEY" > /dev/null 2>&1) &&
      (echo "$HEX_PASSPHRASE"\\nY | mix hex.publish) &&
      mix clean &&
      mix deps.clean --all
   on:
     tags: true
+env:
+  global:
+    secure: lX6kZyA3g6MHMEHJej40zZCaFadbct+Pb/SmfvSoplGCGwEQ5Wqm9FYuFyLZ0UmDxjQ4pfbxD6lqUde1ArkrezQHpSUWBkSwuRI+1QesbVeIrRDgCwiOVxReh91MPBnutPT8U1E2fw8Q3SW8POYqf4smprUACOwepPw8eCDwgRdbg/TGowi01RQkOR1ErfmcD2kLlRQNeVewZrKTmXG4nnKFuSqz4uJHyVeKZVG7Phh2EK2wErCYTyJ+pWo/py44/VTm6zux8GjwDuxhFx4XKVjpnMXCsWBNvorlhro4956R/r9Qxv+JYb4zwVo3CbcegJVLB1LRf38DK2ZpkoXyaYW4e8vRDeAIZqNx65jP6yTLHbthsCOQLXguqBNsbJpQeuYfUimJhsWO0M5INny4yoBpmJDM9/CXNMIz+RiUDtkrsXZxzyRQsX2/Ph8QQmAAf3SjLrIItcUb7pxFxj3dWYgHgw69GYBfxVSaJriVhBEeqvLNu8oXWPKI4muPciLQR64aP5u76oW6VIUIacmvqev2/zVkTBPCJ1zP8HvJ5VZn+o4t10miK6+rqSldoMiunkZt4a6IPyHJcjt5sK7Qf1vPEdNjiaEEACK1+vqEd7y9VF93v94BTwCcVolu7F/pq3Rc6eGJv/dUypl21nKqCn4c14QnsJhlPaWKj5iXDv4=
