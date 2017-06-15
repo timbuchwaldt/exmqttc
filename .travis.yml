@@ -24,3 +24,14 @@ cache:
 notifications:
   email:
     - tim@buchwaldt.ws
+deploy:
+  provider: script
+  script: >-
+    mix deps.get &&
+    mix hex.config username "$HEX_USERNAME" &&
+    (mix hex.config encrypted_key "$HEX_ENCRYPTED_KEY" > /dev/null 2>&1) &&
+     (echo "$HEX_PASSPHRASE"\\nY | mix hex.publish) &&
+     mix clean &&
+     mix deps.clean --all
+  on:
+    tags: true
