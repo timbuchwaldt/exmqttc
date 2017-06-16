@@ -49,6 +49,22 @@ Start the MQTT connection process by calling `start_link/3`:
 ```elixir
 {:ok, pid} = Exmqttc.start_link(MyClient, [], host: '127.0.0.1')
 ```
+The last argument to `start_link` is a  keyword list and supports the following options:
+
+- `host`: Connection host, charlist, default: `'localhost'`
+- `port`: Connection port, integer, default 1883
+- `client_id`: Binary ID for client, automatically set to UUID if not specified
+- `clean_sess`: MQTT cleanSession flag. `true` disables persistent sessions on the server
+- `keepalive`: Keepalive timer, integer
+- `username`: Login username, binary
+- `password`: Login password, binary
+- `will`: Last will, keywordlist, sample: `[qos: 1, retain: false, topic: "WillTopic", payload: "I died"]`
+- `connack_timeout`: Timeout for connack package, integer, default 60
+- `puback_timeout`: Timeout for puback package, integer, default 8
+- `suback_timeout`: Timeout for suback package, integer, default 4
+- `ssl`: List of ssl options
+- `auto_resub`: Automatically resubscribe to topics, boolean, default: `false`
+- `reconnect`: Automatically reconnect on lost connection, integer (),  default `false`
 
 You can publish messages to the given PID:
 
@@ -60,8 +76,6 @@ Exmqttc.publish(pid, "test", "foo")
 ```elixir
 Exmqttc.publish(pid, "test", "foo", qos: 2, retain: true)
 ```
-
-
 
 
 Further docs can be found at [https://hexdocs.pm/exmqttc](https://hexdocs.pm/exmqttc).
