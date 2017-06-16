@@ -1,6 +1,6 @@
 defmodule Exmqttc.Callback do
   @moduledoc """
-  Behaviour module for Exmqttc Callbacks
+  Behaviour module for Exmqttc callbacks
   """
   use GenServer
 
