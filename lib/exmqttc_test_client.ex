@@ -24,4 +24,19 @@ defmodule Exmqttc.Testclient do
     send(:testclient, {:publish, topic, payload})
     {:ok, state}
   end
+
+  def handle_call(:test, _from, state) do
+    send(:testclient, :test_call)
+    {:ok, state}
+  end
+
+  def handle_cast(:test, state) do
+    send(:testclient, :test_cast)
+    {:ok, state}
+  end
+  
+  def handle_info(:test, state) do
+    send(:testclient, :test_info)
+    {:ok, state}
+  end
 end

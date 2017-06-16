@@ -128,6 +128,16 @@ defmodule Exmqttc do
     {:reply, :ok, {mqtt_pid, callback_pid}}
   end
 
+  def handle_call(message,  _from, state = {_mqtt_pid, callback_pid}) do
+    reply = GenServer.call(callback_pid, message)
+    {:reply, reply, state}
+  end
+
+  def handle_cast(message, state = {_mqtt_pid, callback_pid}) do
+    GenServer.cast(callback_pid, message)
+    {:noreply, state}
+  end
+
   # emqttc messages
 
   def handle_info({:mqttc, _pid, :connected}, {mqtt_pid, callback_pid}) do
@@ -143,6 +153,11 @@ defmodule Exmqttc do
   def handle_info({:publish, topic, message}, {mqtt_pid, callback_pid}) do
     GenServer.cast(callback_pid, {:publish, topic, message})
     {:noreply, {mqtt_pid, callback_pid}}
+  end
+
+  def handle_info(message, state = {_mqtt_pid, callback_pid}) do
+    send(callback_pid, message)
+    {:noreply, state}
   end
 
   # helpers

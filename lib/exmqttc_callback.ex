@@ -58,4 +58,22 @@ defmodule Exmqttc.Callback do
         {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
     end
   end
+
+  # Pass unknown casts through
+  def handle_cast(message, %{cb: cb, state: state, connection_pid: connection_pid}) do
+    {:ok, new_state} = cb.handle_cast(message, state)
+    {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
+  end
+
+  # Pass unknown calls through
+  def handle_call(message, from, %{cb: cb, state: state, connection_pid: connection_pid}) do
+    {:ok, new_state} = cb.handle_call(message, from, state)
+    {:reply, :ok,  %{cb: cb, state: new_state, connection_pid: connection_pid}}
+  end
+
+  # Pass unknown infos through
+  def handle_info(message, %{cb: cb, state: state, connection_pid: connection_pid}) do
+    {:ok, new_state} = cb.handle_info(message, state)
+    {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
+  end
 end

@@ -57,4 +57,28 @@ defmodule ExmqttcTest do
     Exmqttc.disconnect(pid)
   end
 
+  test "passing through messages" do
+    {:ok, pid} = Exmqttc.start_link(Exmqttc.Testclient, [name: :my_client_7], keepalive: 30, host: '127.0.0.1')
+    assert_receive :connected, 250
+    send(:my_client_7, :test)
+    assert_receive :test_info, 250
+    Exmqttc.disconnect(pid)
+  end
+
+  test "passing through calls" do
+    {:ok, pid} = Exmqttc.start_link(Exmqttc.Testclient, [name: :my_client_8], keepalive: 30, host: '127.0.0.1')
+    assert_receive :connected, 250
+    GenServer.call(:my_client_8, :test)
+    assert_receive :test_call, 250
+    Exmqttc.disconnect(pid)
+  end
+
+  test "passing through casts" do
+    {:ok, pid} = Exmqttc.start_link(Exmqttc.Testclient, [name: :my_client_9], keepalive: 30, host: '127.0.0.1')
+    assert_receive :connected, 250
+    GenServer.cast(:my_client_9, :test)
+    assert_receive :test_cast, 250
+    Exmqttc.disconnect(pid)
+  end
+
 end
