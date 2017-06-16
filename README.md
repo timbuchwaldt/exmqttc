@@ -21,6 +21,7 @@ Create a callback module:
 ```elixir
 defmodule MyClient do
   require Logger
+  use Exmqttc.Callback
 
   def init do
     {:ok, []}
