@@ -1,5 +1,6 @@
 defmodule Exmqttc.Testclient do
   @moduledoc false
+  use Exmqttc.Callback
 
   def init do
     {:ok, []}
@@ -34,7 +35,7 @@ defmodule Exmqttc.Testclient do
     send(:testclient, :test_cast)
     {:ok, state}
   end
-  
+
   def handle_info(:test, state) do
     send(:testclient, :test_info)
     {:ok, state}

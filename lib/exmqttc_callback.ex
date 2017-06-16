@@ -13,12 +13,12 @@ defmodule Exmqttc.Callback do
   @doc """
   Called once a connection has been established.
   """
-  @callback handle_connected(state :: any()) :: {:ok, state :: any()}
+  @callback handle_connect(state :: any()) :: {:ok, state :: any()}
 
   @doc """
   Called on disconnection from the broker.
   """
-  @callback handle_disconnected(state :: any()) :: {:ok, state :: any()}
+  @callback handle_disconnect(state :: any()) :: {:ok, state :: any()}
 
   @doc """
   Called upon reception of a MQTT message, passes in topic and message.
