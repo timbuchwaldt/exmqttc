@@ -3,6 +3,7 @@
 Elixir wrapper for the emqttc library.
 
 emqttc must currently be installed manually as it is not available on hex (yet).
+
 ## Installation
 
 The package can be installed by adding `exmqttc` and `emqttc` to your list of dependencies in `mix.exs`:
