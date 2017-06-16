@@ -1,4 +1,5 @@
 defmodule Exmqttc.Callback do
+  require Logger
   @moduledoc """
   Behaviour module for Exmqttc callbacks
   """
@@ -26,30 +27,35 @@ defmodule Exmqttc.Callback do
 
   @doc false
   def start_link(module) do
-    GenServer.start_link(__MODULE__, module)
+    GenServer.start_link(__MODULE__, {module, self()})
   end
 
   @doc false
-  def init(cb) do
+  def init({cb, connection_pid}) do
     {:ok, state} = cb.init()
-    {:ok, %{cb: cb, state: state}}
+    {:ok, %{cb: cb, state: state, connection_pid: connection_pid}}
   end
 
   @doc false
-  def handle_cast(:connect, %{cb: cb, state: state}) do
+  def handle_cast(:connect, %{cb: cb, state: state, connection_pid: connection_pid}) do
     {:ok, new_state} = cb.handle_connect(state)
-    {:noreply, %{cb: cb, state: new_state}}
+    {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
   end
 
   @doc false
-  def handle_cast(:disconnect, %{cb: cb, state: state}) do
+  def handle_cast(:disconnect, %{cb: cb, state: state, connection_pid: connection_pid}) do
     {:ok, new_state} = cb.handle_disconnect(state)
-    {:noreply, %{cb: cb, state: new_state}}
+    {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
   end
 
   @doc false
-  def handle_cast({:publish, topic, message}, %{cb: cb, state: state}) do
-    {:ok, new_state} = cb.handle_publish(topic, message, state)
-    {:noreply, %{cb: cb, state: new_state}}
+  def handle_cast({:publish, topic, message}, %{cb: cb, state: state, connection_pid: connection_pid}) do
+    case cb.handle_publish(topic, message, state) do
+      {:ok, new_state} ->
+        {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
+      {:reply, reply_topic, reply_message, new_state} ->
+        Exmqttc.publish(connection_pid, reply_topic, reply_message)
+        {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
+    end
   end
 end
