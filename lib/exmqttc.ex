@@ -65,7 +65,8 @@ defmodule Exmqttc do
   end
 
   @doc """
-  Publish a message to MQTT
+  Publish a message to MQTT.
+  `opts` is a keywordlist and supports `:retain` with a boolean and `:qos` with an integer from 1 to 3
   """
   @spec publish(pid, binary, binary, list) :: :ok
   def publish(pid, topic, payload, opts \\ []) do
@@ -73,7 +74,8 @@ defmodule Exmqttc do
   end
 
   @doc """
-  Publish a message to MQTT synchronously
+  Publish a message to MQTT synchronously.
+  `opts` is a keywordlist and supports `:retain` with a boolean and `:qos` with an integer from 1 to 3
   """
   @spec sync_publish(pid, binary, binary, list) :: :ok
   def sync_publish(pid, topic, payload, opts \\ []) do
@@ -81,7 +83,7 @@ defmodule Exmqttc do
   end
 
   @doc """
-  Disconnect socket to MQTT server
+  Disconnect socket from MQTT server
   """
   @spec disconnect(pid) :: :ok
   def disconnect(pid) do
