@@ -14,7 +14,7 @@ end
 ```
 
 
-# Usage
+## Usage
 
 Create a callback module:
 ```elixir

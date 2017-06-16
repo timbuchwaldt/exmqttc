@@ -8,7 +8,9 @@ defmodule Exmqttc.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
-     package: package()]
+     package: package(),
+     docs: [main: "readme.html#usage", extras: ["README.md"]]
+   ]
   end
 
   # Configuration for the OTP application
