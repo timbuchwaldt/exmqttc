@@ -11,7 +11,6 @@ addons:
 elixir:
 - 1.4.4
 otp_release:
-- 18.3
 - 19.3
 script:
 - mix test
@@ -35,4 +34,3 @@ deploy:
      mix deps.clean --all
   on:
     tags: true
-    otp_release: "19.3"
