@@ -25,6 +25,11 @@ defmodule Exmqttc.Callback do
   """
   @callback handle_publish(topic :: String.t(), message :: String.t(), state :: any()) :: {:ok, state :: any()}
 
+
+  @callback handle_call(message :: term(), from :: {pid(), atom()}, state :: term()) :: {:ok, state :: term()}
+  @callback handle_cast(message :: term(), state :: term()) :: {:ok, state :: term()}
+  @callback handle_info(message :: term(), state :: term()) :: {:ok, state :: term()}
+
   @doc false
   def start_link(module) do
     GenServer.start_link(__MODULE__, {module, self()})
