@@ -77,5 +77,4 @@ Exmqttc.publish(pid, "test", "foo")
 Exmqttc.publish(pid, "test", "foo", qos: 2, retain: true)
 ```
 
-
 Further docs can be found at [https://hexdocs.pm/exmqttc](https://hexdocs.pm/exmqttc).
