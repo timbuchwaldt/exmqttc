@@ -25,10 +25,20 @@ defmodule Exmqttc.Callback do
   """
   @callback handle_publish(topic :: String.t(), message :: String.t(), state :: any()) :: {:ok, state :: any()}
 
-
+  @doc """
+  Called if the connection process or the callback handler process receive unknown `handle_call/3` calls.
+  """
   @callback handle_call(message :: term(), from :: {pid(), atom()}, state :: term()) :: {:ok, state :: term()}
-  @callback handle_cast(message :: term(), state :: term()) :: {:ok, state :: term()}
-  @callback handle_info(message :: term(), state :: term()) :: {:ok, state :: term()}
+
+  @doc """
+  Called if the connection process or the callback handler process receive unknown `handle_cast/2` calls.
+  """
+  @callback handle_cast(message :: term(), state :: term()) :: {:ok, state :: term()} :: {:ok, state :: term()}
+
+  @doc """
+  Called if the connection process or the callback handler process receive unknown `handle_info/2` calls, and by extend also unknown Elixir messages.
+  """
+  @callback handle_info(message :: term(), state :: term()) :: {:ok, state :: term()} :: {:ok, state :: term()}
 
   @doc false
   def start_link(module) do
