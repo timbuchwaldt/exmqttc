@@ -9,7 +9,7 @@ The package can be installed by adding `exmqttc` and `emqttc` to your list of de
 
 ```elixir
 def deps do
-  [{:exmqttc, "~> 0.3.0"}, {:emqttc, github: "emqtt/emqttc"}]
+  [{:exmqttc, "~> 0.3"}, {:emqttc, github: "emqtt/emqttc"}]
 end
 ```
 
