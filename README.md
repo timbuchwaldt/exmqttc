@@ -50,5 +50,18 @@ Start the MQTT connection process by calling `start_link/3`:
 {:ok, pid} = Exmqttc.start_link(MyClient, [], host: '127.0.0.1')
 ```
 
+You can publish messages to the given PID:
+
+```elixir
+Exmqttc.publish(pid, "test", "foo")
+```
+
+`publish/4` also supports passing in QOS and retain options:
+```elixir
+Exmqttc.publish(pid, "test", "foo", qos: 2, retain: true)
+```
+
+
+
 
 Further docs can be found at [https://hexdocs.pm/exmqttc](https://hexdocs.pm/exmqttc).
