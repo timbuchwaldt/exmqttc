@@ -35,3 +35,4 @@ deploy:
      mix deps.clean --all
   on:
     tags: true
+    otp_release: 19.3
