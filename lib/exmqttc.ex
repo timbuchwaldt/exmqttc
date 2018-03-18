@@ -26,6 +26,7 @@ defmodule Exmqttc do
   Start the Exmqttc client. `callback_module` is used for callbacks and should implement the `Exmqttc.Callback` behaviour.
    `opts` are passed directly to GenServer.
   `mqtt_opts` are reformatted so all options can be passed in as a Keyworld list.
+  Params are passed to your callbacks init function.
 
   `mqtt_opts` supports the following options:
   - `host`: Connection host, charlist, default: `'localhost'`
@@ -44,9 +45,9 @@ defmodule Exmqttc do
   - `reconnect`: Automatically reconnect on lost connection, integer (),  default `false`
 
   """
-  def start_link(callback_module, opts \\ [], mqtt_opts \\ []) do
+  def start_link(callback_module, opts \\ [], mqtt_opts \\ [], params \\ []) do
     # default client_id to new uuidv4
-    GenServer.start_link(__MODULE__, [callback_module, mqtt_opts], opts)
+    GenServer.start_link(__MODULE__, [callback_module, mqtt_opts, params], opts)
   end
 
   @doc """
@@ -92,9 +93,9 @@ defmodule Exmqttc do
   end
 
   # GenServer callbacks
-  def init([callback_module, opts]) do
+  def init([callback_module, opts, params]) do
     # start callback handler
-    {:ok, callback_pid} = Exmqttc.Callback.start_link(callback_module)
+    {:ok, callback_pid} = Exmqttc.Callback.start_link(callback_module, params)
 
     {:ok, mqtt_pid} =
       opts

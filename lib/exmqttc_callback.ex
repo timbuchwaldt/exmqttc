@@ -7,9 +7,9 @@ defmodule Exmqttc.Callback do
   use GenServer
 
   @doc """
-  Initializing the callback module, returned data is passed in as state on the next call.
+  Initializing the callback module, returned data is passed in as state on the next call. Params are taken from Exmqttc.start_link
   """
-  @callback init() :: {:ok, state :: any()}
+  @callback init(params :: any) :: {:ok, state :: any()}
 
   @doc """
   Called once a connection has been established.
@@ -49,7 +49,7 @@ defmodule Exmqttc.Callback do
   defmacro __using__(_opts) do
     quote location: :keep do
       @behaviour Exmqttc.Callback
-      def init do
+      def init(_params) do
         {:ok, []}
       end
 
@@ -65,18 +65,18 @@ defmodule Exmqttc.Callback do
         {:ok, state}
       end
 
-      defoverridable init: 0, handle_call: 3, handle_info: 2, handle_cast: 2
+      defoverridable init: 1, handle_call: 3, handle_info: 2, handle_cast: 2
     end
   end
 
   @doc false
-  def start_link(module) do
-    GenServer.start_link(__MODULE__, {module, self()})
+  def start_link(module, params) do
+    GenServer.start_link(__MODULE__, {module, self(), params})
   end
 
   @doc false
-  def init({cb, connection_pid}) do
-    {:ok, state} = cb.init()
+  def init({cb, connection_pid, params}) do
+    {:ok, state} = cb.init(params)
     {:ok, %{cb: cb, state: state, connection_pid: connection_pid}}
   end
 

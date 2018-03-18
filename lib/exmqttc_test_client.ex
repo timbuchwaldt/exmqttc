@@ -2,7 +2,7 @@ defmodule Exmqttc.Testclient do
   @moduledoc false
   use Exmqttc.Callback
 
-  def init do
+  def init(_params) do
     {:ok, []}
   end
 
