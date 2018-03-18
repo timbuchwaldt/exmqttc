@@ -1,4 +1,4 @@
-sudo: false
+sudo: true
 dist: trusty
 language: elixir
 addons:
@@ -9,9 +9,9 @@ addons:
     packages:
     - mosquitto
 elixir:
-- 1.4.4
+- 1.6.3
 otp_release:
-- 19.3
+- 20.2
 script:
 - mix test
 - mix credo
