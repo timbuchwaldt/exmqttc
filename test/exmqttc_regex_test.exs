@@ -28,10 +28,12 @@ defmodule Exmqttc.TopicParser do
   end
 
   def compile(topic) do
-    regex = topic
-    |> tokenize
-    |> Enum.map(&replace/1)
-    |> Enum.join("/")
+    regex =
+      topic
+      |> tokenize
+      |> Enum.map(&replace/1)
+      |> Enum.join("/")
+
     Regex.compile("^#{regex}$")
   end
 

@@ -1,5 +1,6 @@
 defmodule Exmqttc do
   use GenServer
+
   @moduledoc """
   `Exmqttc` provides a connection to a MQTT server based on [emqttc](https://github.com/emqtt/emqttc)
   """
@@ -26,7 +27,7 @@ defmodule Exmqttc do
    `opts` are passed directly to GenServer.
   `mqtt_opts` are reformatted so all options can be passed in as a Keyworld list.
 
-`mqtt_opts` supports the following options:
+  `mqtt_opts` supports the following options:
   - `host`: Connection host, charlist, default: `'localhost'`
   - `port`: Connection port, integer, default 1883
   - `client_id`: Binary ID for client, automatically set to UUID if not specified
@@ -90,16 +91,17 @@ defmodule Exmqttc do
     GenServer.call(pid, :disconnect)
   end
 
-
   # GenServer callbacks
   def init([callback_module, opts]) do
     # start callback handler
     {:ok, callback_pid} = Exmqttc.Callback.start_link(callback_module)
 
-    {:ok, mqtt_pid} = opts
-    |> Keyword.put_new_lazy(:client_id, fn() -> UUID.uuid4() end)
-    |> map_options
-    |> :emqttc.start_link
+    {:ok, mqtt_pid} =
+      opts
+      |> Keyword.put_new_lazy(:client_id, fn -> UUID.uuid4() end)
+      |> map_options
+      |> :emqttc.start_link()
+
     {:ok, {mqtt_pid, callback_pid}}
   end
 
@@ -128,7 +130,7 @@ defmodule Exmqttc do
     {:reply, :ok, {mqtt_pid, callback_pid}}
   end
 
-  def handle_call(message,  _from, state = {_mqtt_pid, callback_pid}) do
+  def handle_call(message, _from, state = {_mqtt_pid, callback_pid}) do
     reply = GenServer.call(callback_pid, message)
     {:reply, reply, state}
   end
@@ -164,7 +166,8 @@ defmodule Exmqttc do
 
   defp map_options(input) do
     merged_defaults = Keyword.merge([logger: :error], input)
-    Enum.map(merged_defaults, fn({key, value}) ->
+
+    Enum.map(merged_defaults, fn {key, value} ->
       if value == true do
         key
       else
@@ -172,5 +175,4 @@ defmodule Exmqttc do
       end
     end)
   end
-
 end

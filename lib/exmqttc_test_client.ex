@@ -18,7 +18,7 @@ defmodule Exmqttc.Testclient do
 
   def handle_publish("reply_topic", payload, state) do
     send(:testclient, {:publish, "reply_topic", payload})
-    {:reply, "foobar", "testmessage",  state}
+    {:reply, "foobar", "testmessage", state}
   end
 
   def handle_publish(topic, payload, state) do
