@@ -10,7 +10,7 @@ The package can be installed by adding `exmqttc` and `emqttc` to your list of de
 
 ```elixir
 def deps do
-  [{:exmqttc, "~> 0.4"}, {:emqttc, github: "emqtt/emqttc"}]
+  [{:exmqttc, "~> 0.5"}, {:emqttc, github: "emqtt/emqttc"}]
 end
 ```
 
@@ -23,7 +23,7 @@ defmodule MyClient do
   require Logger
   use Exmqttc.Callback
 
-  def init do
+  def init(_params) do
     {:ok, []}
   end
 
@@ -48,9 +48,9 @@ You can keep your own state and return it just like with `:gen_server`.
 
 Start the MQTT connection process by calling `start_link/3`:
 ```elixir
-{:ok, pid} = Exmqttc.start_link(MyClient, [], host: '127.0.0.1')
+{:ok, pid} = Exmqttc.start_link(MyClient, [], [host: '127.0.0.1'], params)
 ```
-The last argument to `start_link` is a  keyword list and supports the following options:
+The third argument is a list of emqtt connection options, supporting the following options
 
 - `host`: Connection host, charlist, default: `'localhost'`
 - `port`: Connection port, integer, default 1883
@@ -66,6 +66,8 @@ The last argument to `start_link` is a  keyword list and supports the following 
 - `ssl`: List of ssl options
 - `auto_resub`: Automatically resubscribe to topics, boolean, default: `false`
 - `reconnect`: Automatically reconnect on lost connection, integer (),  default `false`
+
+Params are passed to the init function of your callback module.
 
 You can publish messages to the given PID:
 
