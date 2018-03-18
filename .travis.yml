@@ -1,11 +1,8 @@
-sudo: true
+sudo: false
 dist: trusty
 language: elixir
 addons:
   apt:
-    sources:
-    - sourceline: deb http://repo.mosquitto.org/debian wheezy main
-      key_url: http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key
     packages:
     - mosquitto
 elixir:
