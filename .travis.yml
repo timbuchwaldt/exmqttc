@@ -3,6 +3,8 @@ dist: trusty
 language: elixir
 addons:
   apt:
+    sources:
+    - sourceline: "ppa:mosquitto-dev/mosquitto-ppa"
     packages:
     - mosquitto
 elixir:
