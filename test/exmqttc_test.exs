@@ -66,6 +66,27 @@ defmodule ExmqttcTest do
     Exmqttc.disconnect(pid)
   end
 
+  test "unsubscribing and sending" do
+    {:ok, pid} =
+      Exmqttc.start_link(
+        Exmqttc.Testclient,
+        [name: :my_client_3],
+        keepalive: 30,
+        host: '127.0.0.1'
+      )
+
+    assert_receive :connected, 250
+
+    Exmqttc.subscribe(:my_client_3, "test")
+    Exmqttc.publish(:my_client_3, "test", "foo")
+    assert_receive {:publish, "test", "foo"}, 250
+
+    Exmqttc.unsubscribe(:my_client_3, "test")
+    Exmqttc.publish(:my_client_3, "test", "foo")
+    refute_receive {:publish, "test", "foo"}, 250
+    Exmqttc.disconnect(pid)
+  end
+
   test "replying in the callback module" do
     {:ok, pid} =
       Exmqttc.start_link(
