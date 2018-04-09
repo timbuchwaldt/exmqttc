@@ -115,6 +115,10 @@ defmodule Exmqttc.Callback do
     {:noreply, %{cb: cb, state: new_state, connection_pid: connection_pid}}
   end
 
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, :ok, state}
+  end
+
   # Pass unknown calls through
   @doc false
   def handle_call(message, from, %{cb: cb, state: state, connection_pid: connection_pid}) do
