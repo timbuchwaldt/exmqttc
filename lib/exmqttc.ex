@@ -67,6 +67,14 @@ defmodule Exmqttc do
   end
 
   @doc """
+  Unsubscribe from the given topic(s) given as `topics`.
+  """
+  @spec unsubscribe(pidlike, topics) :: :ok
+  def unsubscribe(pid, topics) do
+    GenServer.call(pid, {:unsubscribe_topics, topics})
+  end
+
+  @doc """
   Publish a message to MQTT.
   `opts` is a keywordlist and supports `:retain` with a boolean and `:qos` with an integer from 1 to 3
   """
@@ -121,6 +129,11 @@ defmodule Exmqttc do
     {:reply, :ok, {mqtt_pid, callback_pid}}
   end
 
+  def handle_call({:unsubscribe_topics, topics}, _from, {mqtt_pid, callback_pid}) do
+    :ok = :emqttc.unsubscribe(mqtt_pid, topics)
+    {:reply, :ok, {mqtt_pid, callback_pid}}
+  end
+
   def handle_call({:publish_message, topic, payload, opts}, _from, {mqtt_pid, callback_pid}) do
     :emqttc.publish(mqtt_pid, topic, payload, opts)
     {:reply, :ok, {mqtt_pid, callback_pid}}
@@ -128,7 +141,8 @@ defmodule Exmqttc do
 
   def handle_call(:disconnect, _from, {mqtt_pid, callback_pid}) do
     :emqttc.disconnect(mqtt_pid)
-    {:reply, :ok, {mqtt_pid, callback_pid}}
+    :ok = GenServer.call(callback_pid, :stop)
+    {:stop, :normal, :ok, {mqtt_pid, callback_pid}}
   end
 
   def handle_call(message, _from, state = {_mqtt_pid, callback_pid}) do
